@@ -1,4 +1,4 @@
-const { findFirstDigit, reverseString, replaceLetterNumbers } = require('./stringHelper');
+const { findFirstDigit, findLastDigit, replaceLetterNumbers } = require('./stringHelper');
 
 class Calibrator {
     constructor(shouldReplaceLetterNumbers = false) {
@@ -8,7 +8,7 @@ class Calibrator {
 
     calibrate(line) {
         const firstDigit = this.shouldReplaceLetterNumbers ? findFirstDigit(replaceLetterNumbers(line)) : findFirstDigit(line);
-        const lastDigit = this.shouldReplaceLetterNumbers ? findFirstDigit(reverseString(replaceLetterNumbers(line, true))) : findFirstDigit(reverseString(line));
+        const lastDigit = this.shouldReplaceLetterNumbers ? findLastDigit(replaceLetterNumbers(line, true)) : findLastDigit(line);
 
         const lineValue = Number(`${firstDigit}${lastDigit}`)
         this.Sum += lineValue;

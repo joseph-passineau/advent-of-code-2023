@@ -15,6 +15,10 @@ function findFirstDigit(stringValue) {
     };
 }
 
+function findLastDigit(stringValue) {
+    return findFirstDigit(reverseString(stringValue));
+}
+
 function replaceLetterNumbers(stringValue, isRightToLeft = false) {
     const splitString = isRightToLeft ? stringValue.split("").reverse() : stringValue.split("");
     let newStringValue = '';
@@ -37,5 +41,6 @@ function replaceLetterNumbers(stringValue, isRightToLeft = false) {
 module.exports = {
     reverseString,
     findFirstDigit,
+    findLastDigit,
     replaceLetterNumbers
 };
