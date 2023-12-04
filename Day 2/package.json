@@ -1,7 +1,7 @@
 {
-  "name": "trebuchet",
+  "name": "cube-conundrum",
   "version": "1.0.0",
-  "description": "advent of code 2023 - Day 1",
+  "description": "advent of code 2023 - Day 2",
   "main": "index.js",
   "scripts": {
     "test": "jest"
