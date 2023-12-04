@@ -12,6 +12,28 @@ class GameRecord {
             this.Sets.push(new GameSet(gameSet));
         }
     }
+
+    getMinimumRequiredBalls() {
+        const result = {
+            red: 0,
+            green: 0,
+            blue: 0
+        }
+
+        for(const gameSet of this.Sets) {
+            if(result.red < gameSet.RedBalls) {
+                result.red = gameSet.RedBalls;
+            }
+            if(result.green < gameSet.GreenBalls) {
+                result.green = gameSet.GreenBalls;
+            }
+            if(result.blue < gameSet.BlueBalls) {
+                result.blue = gameSet.BlueBalls;
+            }
+        }
+
+        return result;
+    }
 }
 
 module.exports = {
