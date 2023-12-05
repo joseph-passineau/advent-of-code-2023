@@ -56,4 +56,37 @@ public class EngineSchematicTest
         Assert.Equal(598, validPartNumbers[9].Number);
         Assert.True(validPartNumbers[9].IsValid);
     }
+
+    [Fact]
+    public void EngineSchematic_Should_ReturnGears()
+    {
+        // Arrange
+        var engineSchematic = new EngineSchematic();
+
+        engineSchematic.AddLine("467..114..");
+        engineSchematic.AddLine("...*......");
+        engineSchematic.AddLine("..35..633.");
+        engineSchematic.AddLine("......#...");
+        engineSchematic.AddLine("617*......");
+        engineSchematic.AddLine(".....+.58.");
+        engineSchematic.AddLine("..592.....");
+        engineSchematic.AddLine("......755.");
+        engineSchematic.AddLine("...$.*....");
+        engineSchematic.AddLine(".664.598..");
+
+        // Act
+
+        var gears = engineSchematic.GetGears();
+
+        // Assert
+        Assert.Equal(3, gears.Count);
+
+        Assert.True(gears[0].IsValid);
+        Assert.Equal(16345, gears[0].Ratio);
+
+        Assert.False(gears[1].IsValid);
+
+        Assert.True(gears[2].IsValid);
+        Assert.Equal(451490, gears[2].Ratio);
+    }
 }
