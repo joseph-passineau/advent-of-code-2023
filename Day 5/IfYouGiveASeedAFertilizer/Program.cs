@@ -4,6 +4,7 @@ using IfYouGiveASeedAFertilizer;
 Console.WriteLine("Advent of Code - Day 5");
 
 var almanac = new Almanac();
+var seedsString = string.Empty;
 var currentSection = string.Empty;
 
 foreach (string line in File.ReadLines("input.txt"))
@@ -19,6 +20,7 @@ foreach (string line in File.ReadLines("input.txt"))
         if (title == "seeds")
         {
             almanac.AddSeeds(splitTitleString[1]);
+            seedsString = splitTitleString[1];
         }
         else 
         {
@@ -60,3 +62,25 @@ var seedResults = almanac.CalculateSeedsMapping();
 var lowestLocation = seedResults.Min(s => s.Location);
 
 Console.WriteLine("The lowest location number is: {0}", lowestLocation);
+
+var seedsIterator = new SeedsIterator(seedsString);
+long finalLowestLocation = long.MaxValue;
+
+var currentIteration = 1;
+var iterationsCount = seedsString.Split(" ", StringSplitOptions.RemoveEmptyEntries).Length / 2;
+
+foreach (var seeds in seedsIterator)
+{
+    almanac.ClearSeeds();
+    almanac.AddSeedsRange(seeds);
+    var result = almanac.CalculateSeedsMapping(true).First();
+    if(result.Location < finalLowestLocation)
+    {
+        finalLowestLocation = result.Location;
+    }
+
+    Console.WriteLine($"Iteration {currentIteration} out of {iterationsCount}");
+    currentIteration++;
+}
+
+Console.WriteLine("The final lowest location number is: {0}", finalLowestLocation);

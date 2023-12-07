@@ -19,6 +19,16 @@ public class Almanac
         }
     }
 
+    public void AddSeedsRange(IEnumerable<long> values)
+    {
+        seeds.AddRange(values);
+    }
+
+    public void ClearSeeds()
+    {
+        seeds.Clear();
+    }
+
     public void AddSeedToSoilMap(string map)
     {
         seedToSoilMap.Add(new DestinationSourceMap(map));
@@ -54,9 +64,10 @@ public class Almanac
         humidityToLocationMap.Add(new DestinationSourceMap(map));
     }
 
-    public List<SeedResult> CalculateSeedsMapping()
+    public List<SeedResult> CalculateSeedsMapping(bool keepLowestLocationOnly = false)
     {
         var results = new List<SeedResult>();
+        SeedResult lowestLocationSeed = new SeedResult(9999) { Location = long.MaxValue};
 
         foreach (var seed in seeds)
         {
@@ -70,7 +81,22 @@ public class Almanac
             seedResult.Humidity = new DestinationSourceMapper(tempatureToHumidityMap).GetDestinationValue(seedResult.Temperature);
             seedResult.Location = new DestinationSourceMapper(humidityToLocationMap).GetDestinationValue(seedResult.Humidity);
 
-            results.Add(seedResult);
+            if(keepLowestLocationOnly)
+            {
+                if(seedResult.Location < lowestLocationSeed.Location)
+                {
+                    lowestLocationSeed = seedResult;
+                }
+            }
+            else
+            {
+                results.Add(seedResult);
+            }
+        }
+
+        if(keepLowestLocationOnly)
+        {
+            results.Add(lowestLocationSeed);
         }
 
         return results;
